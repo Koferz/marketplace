@@ -7,5 +7,5 @@ pluginManagement {
     }
 }
 
-include("lessons")
-include("marketplace-be")
+includeBuild("lessons")
+includeBuild("marketplace-be")

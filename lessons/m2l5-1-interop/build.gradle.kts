@@ -31,11 +31,11 @@ kotlin {
     ).forEach {
         it.apply {
             compilations.getByName("main") {
-                cinterops {
-                    // настраиваем cinterop в файле src/nativeInterop/cinterop/libcurl.def
-                    val libcurl by creating
-//                    create("libcurl")
-                }
+//                cinterops {
+//                    // настраиваем cinterop в файле src/nativeInterop/cinterop/libcurl.def
+//                    val libcurl by creating
+////                    create("libcurl")
+//                }
             }
             binaries {
                 executable {
