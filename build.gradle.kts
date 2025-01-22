@@ -1,9 +1,15 @@
+//plugins {
+//    kotlin("jvm") apply false
+//}
+
 plugins {
-    kotlin("jvm") apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
 }
 
-group = "ru.otus.kp"
-version = "1.0-SNAPSHOT"
+
+group = "ru.otus.marketplace"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
