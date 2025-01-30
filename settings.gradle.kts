@@ -7,4 +7,5 @@ pluginManagement {
     }
 }
 
-include("m1l1-first")
+includeBuild("lessons")
+includeBuild("marketplace-be")
