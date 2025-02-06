@@ -1,4 +1,4 @@
-rootProject.name = "marketplace"
+rootProject.name = "yieldInsights"
 
 pluginManagement {
     plugins {
@@ -8,4 +8,4 @@ pluginManagement {
 }
 
 includeBuild("lessons")
-includeBuild("marketplace-be")
+includeBuild("yieldInsights-be")
