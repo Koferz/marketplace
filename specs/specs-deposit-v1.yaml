@@ -112,18 +112,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DepositSearchResponse'
-  /deposit/offers:
+  /deposit/closing:
     post:
       tags:
         - deposit
-      summary: Search offers
-      operationId: depositOffers
+      summary: Search closing
+      operationId: depositClosing
       requestBody:
         description: Request body
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DepositOffersRequest'
+              $ref: '#/components/schemas/DepositClosingRequest'
         required: true
       responses:
         200:
@@ -131,7 +131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DepositOffersResponse'
+                $ref: '#/components/schemas/DepositClosingResponse'
 
 components:
   schemas:
@@ -152,7 +152,7 @@ components:
           update: '#/components/schemas/DepositUpdateRequest'
           delete: '#/components/schemas/DepositDeleteRequest'
           search: '#/components/schemas/DepositSearchRequest'
-          offers: '#/components/schemas/DepositOffersRequest'
+          closings: '#/components/schemas/DepositClosingRequest'
 
     Error:
       type: object
@@ -195,258 +195,245 @@ components:
           update: '#/components/schemas/DepositUpdateResponse'
           delete: '#/components/schemas/DepositDeleteResponse'
           search: '#/components/schemas/DepositSearchResponse'
-          offers: '#/components/schemas/DepositOffersResponse'
+          closing: '#/components/schemas/DepositClosingResponse'
           init: '#/components/schemas/DepositInitResponse'
 
     UserId:
       type: string
       description: Идентификатор пользователя
-    AdId:
+    DepositId:
       type: string
-      description: Идентификатор объявления
-    AdLock:
-      type: string
-      description: Версия оптимистичной блокировки
+      description: Идентификатор депозита
 
-    BaseAd:
+    BaseDeposit:
       type: object
       description: Объект описывает свойства, одинаковые для create и update
       properties:
-        title:
+        bankName:
           type: string
-          description: Заголовок объявления
-        description:
+          description: Наименование банка
+        depositName:
           type: string
-          description: Описание объявления
-        adType:
-          $ref: '#/components/schemas/DealSide'
-        visibility:
-          $ref: '#/components/schemas/AdVisibility'
+          description: Наименование вклада
+        rate:
+          type: string
+          description: Процентная ставка
+        openingDate:
+          type: string
+          description: Дата открытия
+        depositTerm:
+          type: string
+          description: Срок депозита
+        depositAmount:
+          type: string
+          description: Сумма вклада
+        depositOperation:
+          type: string
+          description: Дата следующей операции (закрытие или пролонгация)
+        isActive:
+          type: string
+          description: Активность вклада
 
-    DealSide:
-      type: string
-      description: 'Сторона сделки: спрос или предложение'
-      enum:
-        - demand
-        - supply
-
-    AdVisibility:
-      type: string
-      description: 'Тип видимости объявления. Возможные значения: видит только владелец, только зарегистрированный в системе пользователь, видимо всем'
-      enum:
-        - ownerOnly
-        - registeredOnly
-        - public
-
-    AdInitResponse:
+    DepositInitResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
 
-    AdCreateObject:
+    DepositCreateObject:
       allOf:
-        - $ref: '#/components/schemas/BaseAd'
+        - $ref: '#/components/schemas/BaseDeposit'
 
-    AdCreateRequest:
+    DepositCreateRequest:
       allOf:
         - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/AdRequestDebug'
+        - $ref: '#/components/schemas/DepositRequestDebug'
         - type: object
           properties:
-            ad:
-              $ref: '#/components/schemas/AdCreateObject'
+            deposit:
+              $ref: '#/components/schemas/DepositCreateObject'
 
-    AdReadObject:
+    DepositReadObject:
       allOf:
         - type: object
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
+              $ref: '#/components/schemas/DepositId'
 
-    AdReadRequest:
+    DepositReadRequest:
       allOf:
         - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/AdRequestDebug'
+        - $ref: '#/components/schemas/DepositRequestDebug'
         - type: object
           properties:
-            ad:
-              $ref: '#/components/schemas/AdReadObject'
+            deposit:
+              $ref: '#/components/schemas/DepositReadObject'
 
-    AdUpdateObject:
+    DepositUpdateObject:
       allOf:
-        - $ref: '#/components/schemas/BaseAd'
+        - $ref: '#/components/schemas/BaseDeposit'
         - type: object
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
+              $ref: '#/components/schemas/DepositId'
 
-    AdUpdateRequest:
+    DepositUpdateRequest:
       allOf:
         - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/AdRequestDebug'
+        - $ref: '#/components/schemas/DepositRequestDebug'
         - type: object
           properties:
-            ad:
-              $ref: '#/components/schemas/AdUpdateObject'
+            deposit:
+              $ref: '#/components/schemas/DepositUpdateObject'
 
-    AdDeleteObject:
+    DepositDeleteObject:
       allOf:
         - type: object
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
+              $ref: '#/components/schemas/DepositId'
 
-    AdDeleteRequest:
+    DepositDeleteRequest:
       allOf:
         - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/AdRequestDebug'
+        - $ref: '#/components/schemas/DepositRequestDebug'
         - type: object
           properties:
-            ad:
-              $ref: '#/components/schemas/AdDeleteObject'
+            deposit:
+              $ref: '#/components/schemas/DepositDeleteObject'
 
-    AdSearchFilter:
+    DepositSearchFilter:
       type: object
       description: Набор фильтров для поиска
       properties:
         searchString:
           type: string
-          description: Поисковая строка, которая будет искаться в объявлениях
+          description: Поисковая строка, которая будет искаться в депозитах
 
-    AdSearchRequest:
+    DepositSearchRequest:
       allOf:
         - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/AdRequestDebug'
+        - $ref: '#/components/schemas/DepositRequestDebug'
         - type: object
           properties:
-            adFilter:
-              $ref: '#/components/schemas/AdSearchFilter'
+            depositFilter:
+              $ref: '#/components/schemas/DepositSearchFilter'
 
-    AdOffersObject:
-      $ref: '#/components/schemas/AdReadObject'
+    DepositClosingObject:
+      $ref: '#/components/schemas/DepositReadObject'
 
-    AdOffersRequest:
+    DepositClosingRequest:
       allOf:
         - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/AdRequestDebug'
+        - $ref: '#/components/schemas/DepositRequestDebug'
         - type: object
           properties:
-            ad:
-              $ref: '#/components/schemas/AdOffersObject'
+            deposit:
+              $ref: '#/components/schemas/DepositClosingObject'
 
-    AdResponseObject:
+    DepositResponseObject:
       allOf:
-        - $ref: '#/components/schemas/BaseAd'
+        - $ref: '#/components/schemas/BaseDeposit'
         - type: object
           description: Объект, который возвращается в ответе бэкенда
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
+              $ref: '#/components/schemas/DepositId'
             ownerId:
               $ref: '#/components/schemas/UserId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
             permissions:
               type: array
               uniqueItems: true
               items:
-                $ref: '#/components/schemas/AdPermissions'
+                $ref: '#/components/schemas/DepositPermissions'
 
-    AdPermissions:
+    DepositPermissions:
       type: string
       description: Доступы для клиента для операций над объявлением
       enum:
         - read
         - update
         - delete
-        - makeVisiblePublic
-        - makeVisibleOwn
-        - makeVisibleGroup
 
-    AdResponseSingle:
+    DepositResponseSingle:
       allOf:
         - type: object
-          description: Ответ с одним объектом объявления
+          description: Ответ с одним объектом депозит
           properties:
-            ad:
-              $ref: '#/components/schemas/AdResponseObject'
+            deposit:
+              $ref: '#/components/schemas/DepositResponseObject'
 
-    AdResponseMulti:
+    DepositResponseMulti:
       allOf:
         - type: object
           description: Список найденных объектов
           properties:
-            ads:
+            deposits:
               type: array
               items:
-                $ref: '#/components/schemas/AdResponseObject'
+                $ref: '#/components/schemas/DepositResponseObject'
 
-    AdCreateResponse:
+    DepositCreateResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/DepositResponseSingle'
 
-    AdReadResponse:
+    DepositReadResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/DepositResponseSingle'
 
-    AdUpdateResponse:
+    DepositUpdateResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/DepositResponseSingle'
 
-    AdDeleteResponse:
+    DepositDeleteResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/DepositResponseSingle'
 
-    AdSearchResponse:
+    DepositSearchResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseMulti'
+        - $ref: '#/components/schemas/DepositResponseMulti'
 
-    AdOffersResponse:
+    DepositClosingResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
-        - $ref: '#/components/schemas/AdResponseMulti'
+        - $ref: '#/components/schemas/DepositResponseSingle'
+        - $ref: '#/components/schemas/DepositResponseMulti'
 
     # STUBS ======================
-    AdRequestDebugMode:
+    DepositRequestDebugMode:
       type: string
       enum:
         - prod
         - test
         - stub
 
-    AdRequestDebug:
+    DepositRequestDebug:
       type: object
       properties:
         debug:
-          $ref: '#/components/schemas/AdDebug'
+          $ref: '#/components/schemas/DepositDebug'
 
-    AdDebug:
+    DepositDebug:
       type: object
       properties:
         mode:
-          $ref: '#/components/schemas/AdRequestDebugMode'
+          $ref: '#/components/schemas/DepositRequestDebugMode'
         stub:
-          $ref: '#/components/schemas/AdRequestDebugStubs'
+          $ref: '#/components/schemas/DepositRequestDebugStubs'
 
-    AdRequestDebugStubs:
+    DepositRequestDebugStubs:
       type: string
       description: Перечисления всех стабов
       enum:
         - success
         - notFound
         - badId
-        - badTitle
-        - badDescription
-        - badVisibility
+        - badOpeningDate
+        - badDepositTerm
+        - badDepositAmount
         - cannotDelete
         - badSearchString
 
