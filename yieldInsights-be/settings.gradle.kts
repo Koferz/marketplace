@@ -29,3 +29,6 @@ plugins {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":yieldInsights-be-api-v1-jackson")
+include(":yieldInsights-api-v1-mappers")
+include(":yieldInsights-common")
+

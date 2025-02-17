@@ -204,6 +204,9 @@ components:
     DepositId:
       type: string
       description: Идентификатор депозита
+    AdLock:
+      type: string
+      description: Версия оптимистичной блокировки
 
     BaseDeposit:
       type: object
@@ -274,6 +277,8 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/DepositId'
+            lock:
+              $ref: '#/components/schemas/AdLock'
 
     DepositUpdateRequest:
       allOf:
