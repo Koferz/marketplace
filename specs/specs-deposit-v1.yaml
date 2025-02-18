@@ -295,6 +295,8 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/DepositId'
+            lock:
+              $ref: '#/components/schemas/AdLock'
 
     DepositDeleteRequest:
       allOf:

@@ -3,6 +3,7 @@ package models
 data class Deposit(
     var depositId: DepositId = DepositId.NONE,
     var bankName: DepositOrgName = DepositOrgName.NONE,
+    var ownerId: UserId = UserId.NONE,
     var depositName: String = "",
     var rate: String = "",
     var openingDate: String = "",

@@ -6,7 +6,7 @@ import models.*
 data class Context(
     var command: Command = Command.NONE,
     var state: State = State.NONE,
-    val errors: MutableList<Error> = mutableListOf(),
+    val errors: MutableList<DepositError> = mutableListOf(),
 
     var workMode: WorkMode = WorkMode.PROD,
     var stubCase: Stubs = Stubs.NONE,
@@ -14,7 +14,7 @@ data class Context(
     var requestId: RequestId = RequestId.NONE,
     var timeStart: Instant = Instant.NONE,
     var depositRequest: Deposit = Deposit(),
-    var adFilterRequest: DepositFilter = DepositFilter(),
+    var depositFilterRequest: DepositFilter = DepositFilter(),
 
     var depositResponse: Deposit = Deposit(),
     var depositsResponse: MutableList<Deposit> = mutableListOf(),
