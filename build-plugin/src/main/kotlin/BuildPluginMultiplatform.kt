@@ -6,10 +6,10 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.the
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 @Suppress("unused")
 internal class BuildPluginMultiplatform : Plugin<Project> {
@@ -31,10 +31,12 @@ internal class BuildPluginMultiplatform : Plugin<Project> {
                 }
             }
         }
+        repositories {
+            mavenCentral()
+        }
     }
 }
 
-@OptIn(ExperimentalKotlinGradlePluginApi::class)
 @Suppress("LongMethod", "MagicNumber")
 private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
     val libs = project.the<LibrariesForLibs>()
@@ -44,8 +46,10 @@ private fun KotlinMultiplatformExtension.configureTargets(project: Project) {
     }
 
     jvm {
-        compilerOptions.apply {
-            jvmTarget.set(JvmTarget.valueOf("JVM_${libs.versions.jvm.compiler.get()}"))
+        compilations.configureEach {
+            compilerOptions.configure {
+                jvmTarget.set(JvmTarget.valueOf("JVM_${libs.versions.jvm.compiler.get()}"))
+            }
         }
     }
     linuxX64()
