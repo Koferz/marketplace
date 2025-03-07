@@ -8,7 +8,7 @@ plugins {
 }
 
 
-group = "ru.otus.marketplace"
+group = "ru.otus.yieldInsights"
 version = "0.0.1"
 
 repositories {
