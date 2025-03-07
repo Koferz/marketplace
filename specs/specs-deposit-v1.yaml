@@ -1,0 +1,446 @@
+openapi: 3.0.4
+info:
+  title: "YieldInsights ${VERSION_APP}"
+  description: This is a place where sellers and buyers meat each other
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: deposit
+    description: Депозит
+paths:
+  /deposit/create:
+    post:
+      tags:
+        - deposit
+      summary: Create deposit
+      operationId: depositCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositCreateResponse'
+  /deposit/read:
+    post:
+      tags:
+        - deposit
+      summary: Read deposit
+      operationId: depositRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositReadResponse'
+  /deposit/update:
+    post:
+      tags:
+        - deposit
+      summary: Update deposit
+      operationId: depositUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositUpdateResponse'
+  /deposit/delete:
+    post:
+      tags:
+        - deposit
+      summary: Delete deposit
+      operationId: depositDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositDeleteResponse'
+  /deposit/search:
+    post:
+      tags:
+        - deposit
+      summary: Search deposit
+      operationId: depositSearch
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositSearchRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositSearchResponse'
+  /deposit/closing:
+    post:
+      tags:
+        - deposit
+      summary: Search closing
+      operationId: depositClosing
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositClosingRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepositClosingResponse'
+
+components:
+  schemas:
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/DepositCreateRequest'
+          read: '#/components/schemas/DepositReadRequest'
+          update: '#/components/schemas/DepositUpdateRequest'
+          delete: '#/components/schemas/DepositDeleteRequest'
+          search: '#/components/schemas/DepositSearchRequest'
+          closings: '#/components/schemas/DepositClosingRequest'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дескриминатор для вычисления типа запроса
+          example: create
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/DepositCreateResponse'
+          read: '#/components/schemas/DepositReadResponse'
+          update: '#/components/schemas/DepositUpdateResponse'
+          delete: '#/components/schemas/DepositDeleteResponse'
+          search: '#/components/schemas/DepositSearchResponse'
+          closing: '#/components/schemas/DepositClosingResponse'
+          init: '#/components/schemas/DepositInitResponse'
+
+    UserId:
+      type: string
+      description: Идентификатор пользователя
+    DepositId:
+      type: string
+      description: Идентификатор депозита
+    AdLock:
+      type: string
+      description: Версия оптимистичной блокировки
+
+    BaseDeposit:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        bankName:
+          type: string
+          description: Наименование банка
+        depositName:
+          type: string
+          description: Наименование вклада
+        rate:
+          type: string
+          description: Процентная ставка
+        openingDate:
+          type: string
+          description: Дата открытия
+        depositTerm:
+          type: string
+          description: Срок депозита
+        depositAmount:
+          type: string
+          description: Сумма вклада
+        depositOperation:
+          type: string
+          description: Дата следующей операции (закрытие или пролонгация)
+        isActive:
+          type: string
+          description: Активность вклада
+
+    DepositInitResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    DepositCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseDeposit'
+
+    DepositCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DepositRequestDebug'
+        - type: object
+          properties:
+            deposit:
+              $ref: '#/components/schemas/DepositCreateObject'
+
+    DepositReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/DepositId'
+
+    DepositReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DepositRequestDebug'
+        - type: object
+          properties:
+            deposit:
+              $ref: '#/components/schemas/DepositReadObject'
+
+    DepositUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseDeposit'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/DepositId'
+            lock:
+              $ref: '#/components/schemas/AdLock'
+
+    DepositUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DepositRequestDebug'
+        - type: object
+          properties:
+            deposit:
+              $ref: '#/components/schemas/DepositUpdateObject'
+
+    DepositDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/DepositId'
+            lock:
+              $ref: '#/components/schemas/AdLock'
+
+    DepositDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DepositRequestDebug'
+        - type: object
+          properties:
+            deposit:
+              $ref: '#/components/schemas/DepositDeleteObject'
+
+    DepositSearchFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchString:
+          type: string
+          description: Поисковая строка, которая будет искаться в депозитах
+
+    DepositSearchRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DepositRequestDebug'
+        - type: object
+          properties:
+            depositFilter:
+              $ref: '#/components/schemas/DepositSearchFilter'
+
+    DepositClosingObject:
+      $ref: '#/components/schemas/DepositReadObject'
+
+    DepositClosingRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/DepositRequestDebug'
+        - type: object
+          properties:
+            deposit:
+              $ref: '#/components/schemas/DepositClosingObject'
+
+    DepositResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseDeposit'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              $ref: '#/components/schemas/DepositId'
+            ownerId:
+              $ref: '#/components/schemas/UserId'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/DepositPermissions'
+
+    DepositPermissions:
+      type: string
+      description: Доступы для клиента для операций над объявлением
+      enum:
+        - read
+        - update
+        - delete
+
+    DepositResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом депозит
+          properties:
+            deposit:
+              $ref: '#/components/schemas/DepositResponseObject'
+
+    DepositResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных объектов
+          properties:
+            deposits:
+              type: array
+              items:
+                $ref: '#/components/schemas/DepositResponseObject'
+
+    DepositCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DepositResponseSingle'
+
+    DepositReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DepositResponseSingle'
+
+    DepositUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DepositResponseSingle'
+
+    DepositDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DepositResponseSingle'
+
+    DepositSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DepositResponseMulti'
+
+    DepositClosingResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/DepositResponseSingle'
+        - $ref: '#/components/schemas/DepositResponseMulti'
+
+    # STUBS ======================
+    DepositRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    DepositRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/DepositDebug'
+
+    DepositDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/DepositRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/DepositRequestDebugStubs'
+
+    DepositRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badOpeningDate
+        - badDepositTerm
+        - badDepositAmount
+        - cannotDelete
+        - badSearchString
+
