@@ -1,4 +1,4 @@
-openapi: 3.0.4
+openapi: 3.1.0
 info:
   title: "YieldInsights ${VERSION_APP}"
   description: This is a place where sellers and buyers meat each other

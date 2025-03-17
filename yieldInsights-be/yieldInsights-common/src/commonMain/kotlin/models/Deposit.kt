@@ -9,7 +9,7 @@ data class Deposit(
     var openingDate: String = "",
     var depositTerm: String = "",
     var depositAmount: String = "",
-    var depositOperation: DepositOperation? = DepositOperation.PROLONGATION,
+    var depositOperation: DepositOperation = DepositOperation.PROLONGATION,
     var isActive: DepositActive = DepositActive.NONE,
     var lock: DepositLock = DepositLock.NONE
 ) {
