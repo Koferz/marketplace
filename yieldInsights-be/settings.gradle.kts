@@ -30,6 +30,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":yieldInsights-be-api-v1-jackson")
 include(":yieldInsights-api-v1-mappers")
+include(":yieldInsights-api-v2-kmp")
 include(":yieldInsights-common")
 include(":yieldInsights-app-spring")
 include(":yieldInsights-app-common")

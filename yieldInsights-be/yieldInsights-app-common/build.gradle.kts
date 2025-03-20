@@ -14,8 +14,6 @@ kotlin {
                 // transport models
                 implementation(project(":yieldInsights-common"))
                 implementation(project(":yieldInsights-api-log1"))
-                implementation(project(":yieldInsights-be-api-v1-jackson"))
-                implementation(project(":yieldInsights-api-v1-mappers"))
                 implementation(project(":yieldInsights-biz"))
             }
         }
@@ -25,9 +23,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
 
                 implementation(libs.coroutines.test)
-                implementation(project(":yieldInsights-be-api-v1-jackson"))
-                implementation(project(":yieldInsights-api-v1-mappers"))
-                implementation(project(":yieldInsights-api-log1"))
+                implementation(project(":yieldInsights-api-v2-kmp"))
             }
         }
 

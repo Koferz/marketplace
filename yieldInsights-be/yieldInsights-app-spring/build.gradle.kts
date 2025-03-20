@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.coroutines.reactive)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
 
     // Внутренние модели
     implementation(project(":yieldInsights-common"))
@@ -29,6 +30,8 @@ dependencies {
     implementation(project(":yieldInsights-be-api-v1-jackson"))
     implementation(project(":yieldInsights-api-v1-mappers"))
 
+    // v2 api
+    implementation(project(":yieldInsights-api-v2-kmp"))
 
     // biz
     implementation(project(":yieldInsights-biz"))
