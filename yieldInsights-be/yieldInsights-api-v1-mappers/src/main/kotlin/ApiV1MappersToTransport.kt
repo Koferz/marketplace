@@ -1,3 +1,6 @@
+package ru.otus.otuskotlin.yieldInsights.api.v1.mappers
+
+import Context
 import exceptions.UnknownCommand
 import models.*
 import ru.otus.yieldInsights.api.v1.models.*

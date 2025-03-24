@@ -22,3 +22,10 @@ subprojects {
         mavenCentral()
     }
 }
+
+tasks {
+    create("check") {
+        group = "verification"
+        dependsOn(gradle.includedBuild("yieldInsights-be").task(":check"))
+    }
+}

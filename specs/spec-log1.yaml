@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: yieldInsights log models
+  description: Log models for logging services of marketplace
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths: {}
+
+components:
+  schemas:
+    CommonLogModel:
+      title: Общая модель лога
+      description: Общая модель лога для всех микросервисов системы
+      type: object
+      properties:
+        messageTime:
+          type: string
+        logId:
+          type: string
+        source:
+          type: string
+        deposit:
+          $ref: '#/components/schemas/yieldInsightsLogModel'
+        #        comments:
+        #          $ref: '#/components/schemas/MkplLogModel'
+        #        files:
+        #          $ref: '#/components/schemas/MkplLogModel'
+        #        images:
+        #          $ref: '#/components/schemas/MkplLogModel'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorLogModel'
+
+    yieldInsightsLogModel:
+      title: Модель лога для микросервиса yieldInsights
+      type: object
+      properties:
+        requestId:
+          type: string
+        operation:
+          $ref: '#/components/schemas/yieldInsightsLogOperation'
+        requestDeposit:
+          $ref: '#/components/schemas/DepositLog'
+        requestFilter:
+          $ref: '#/components/schemas/DepositFilterLog'
+        responseDeposit:
+          $ref: '#/components/schemas/DepositLog'
+        responseDeposits:
+          type: array
+          items:
+            $ref: '#/components/schemas/DepositLog'
+
+    yieldInsightsLogOperation:
+      type: string
+      enum:
+        - create
+        - read
+        - update
+        - delete
+        - search
+        - closing
+        - init
+        - finish
+
+    ErrorLogModel:
+      title: Модель лога для ошибки
+      type: object
+      properties:
+        message:
+          type: string
+        field:
+          type: string
+        code:
+          type: string
+        level:
+          type: string
+
+    DepositLog:
+      title: Модель лога для депозита
+      type: object
+      properties:
+        id:
+          type: string
+        bankName:
+          type: string
+        depositName:
+          type: string
+        rate:
+          type: string
+        openingDate:
+          type: string
+        depositTerm:
+          type: string
+        depositAmount:
+          type: string
+        depositOperation:
+          type: string
+        isActive:
+          type: string
+
+    DepositFilterLog:
+      title: Модель лога фильтра
+      properties:
+        searchString:
+          type: string
