@@ -12,6 +12,14 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
                 implementation(libs.kotlinx.serialization.core)
                 implementation(libs.kotlinx.serialization.json)
+                api("ru.otus.otuskotlin.yieldInsights.libs:yieldInsights-lib-logging-common")
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
+                //implementation(project(":yieldInsights-be-api-v1-jackson"))
             }
         }
 

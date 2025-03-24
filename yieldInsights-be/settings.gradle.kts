@@ -20,9 +20,9 @@ pluginManagement {
     }
 }
 
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
-}
+//plugins {
+//    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+//}
 
 // Включает вот такую конструкцию
 //implementation(projects.m2l5Gradle.sub1.ssub1)
@@ -30,5 +30,12 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":yieldInsights-be-api-v1-jackson")
 include(":yieldInsights-api-v1-mappers")
+include(":yieldInsights-api-v2-kmp")
 include(":yieldInsights-common")
+include(":yieldInsights-app-spring")
+include(":yieldInsights-app-common")
+include(":yieldInsights-app-rabbit")
+include(":yieldInsights-api-log1")
+include(":yieldInsights-biz")
+include(":yieldInsights-stubs")
 
