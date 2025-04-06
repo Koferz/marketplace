@@ -8,5 +8,6 @@ value class DepositOrgName(private val id: String) {
 
     companion object {
         val NONE = DepositOrgName("")
+        val T = DepositOrgName("1")
     }
 }

@@ -8,6 +8,7 @@ data class Context(
     var state: State = State.NONE,
     val errors: MutableList<DepositError> = mutableListOf(),
 
+    var corSettings: CorSettings = CorSettings(),
     var workMode: WorkMode = WorkMode.PROD,
     var stubCase: Stubs = Stubs.NONE,
 

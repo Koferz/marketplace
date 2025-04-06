@@ -1,7 +1,8 @@
 package helpers
 
-import models.Deposit
+import Context
 import models.DepositError
+import models.State
 
 fun Throwable.asDepositError(
     code: String = "unknown",
@@ -14,3 +15,10 @@ fun Throwable.asDepositError(
     message = message,
     exception = this,
 )
+
+inline fun Context.addError(vararg error: DepositError) = errors.addAll(error)
+
+inline fun Context.fail(error: DepositError) {
+    addError(error)
+    state = State.FAILING
+}
