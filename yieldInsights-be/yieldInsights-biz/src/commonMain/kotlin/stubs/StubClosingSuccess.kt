@@ -21,7 +21,7 @@ fun ICorChainDsl<Context>.stubClosingSuccess(title: String, corSettings: CorSett
             depositResponse = DepositStub.prepareResult {
                 depositRequest.depositId.takeIf { it != DepositId.NONE }?.also { this.depositId = it }
             }
-            //depositsResponse.addAll(DepositStub.prepareOffersList(depositResponse.title, ))
+            depositsResponse.addAll(DepositStub.prepareClosingList(depositResponse.rate))
         }
     }
 }

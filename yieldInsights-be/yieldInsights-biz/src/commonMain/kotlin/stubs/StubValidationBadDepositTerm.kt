@@ -9,7 +9,7 @@ import ru.otus.otuskotlin.yieldInsights.cor.worker
 import stubs.Stubs
 
 
-fun ICorChainDsl<Context>.stubValidationBadTitle(title: String) = worker {
+fun ICorChainDsl<Context>.stubValidationBadDepositTerm(title: String) = worker {
     this.title = title
     this.description = """
         Кейс ошибки валидации для depositTerm

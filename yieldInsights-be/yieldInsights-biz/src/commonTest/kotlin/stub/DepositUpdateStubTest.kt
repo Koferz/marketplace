@@ -8,22 +8,21 @@ import stubs.Stubs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class DepositCreateStubTest {
+class DepositUpdateStubTest {
 
     private val processor = DepositProcessor()
-    val bankName = DepositOrgName.T
-    val depositName = "first"
-    val openingDate = "01-01-2025"
+    val bankName = DepositOrgName.NONE
+    val depositName = "deposit1"
+    val openingDate = "2025-02-01"
     val depositTerm = "6"
     val depositAmount = "18"
     val depositOperation = DepositOperation.PROLONGATION
-    //val visibility = MkplVisibility.VISIBLE_PUBLIC
 
     @Test
     fun create() = runTest {
 
         val ctx = Context(
-            command = Command.CREATE,
+            command = Command.UPDATE,
             state = State.NONE,
             workMode = WorkMode.STUB,
             stubCase = Stubs.SUCCESS,
@@ -47,9 +46,24 @@ class DepositCreateStubTest {
     }
 
     @Test
+    fun badId() = runTest {
+        val ctx = Context(
+            command = Command.UPDATE,
+            state = State.NONE,
+            workMode = WorkMode.STUB,
+            stubCase = Stubs.BAD_ID,
+            depositRequest = Deposit(),
+        )
+        processor.exec(ctx)
+        assertEquals(Deposit(), ctx.depositResponse)
+        assertEquals("id", ctx.errors.firstOrNull()?.field)
+        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+    }
+
+    @Test
     fun badTitle() = runTest {
         val ctx = Context(
-            command = Command.CREATE,
+            command = Command.UPDATE,
             state = State.NONE,
             workMode = WorkMode.STUB,
             stubCase = Stubs.BAD_DEPOSIT_TERM,
@@ -66,61 +80,62 @@ class DepositCreateStubTest {
         assertEquals("depositTerm", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
+
     @Test
-    fun badDescription() = runTest {
-        val ctx = MkplContext(
-            command = MkplCommand.CREATE,
-            state = MkplState.NONE,
-            workMode = MkplWorkMode.STUB,
-            stubCase = MkplStubs.BAD_DESCRIPTION,
-            adRequest = Deposit(
-                id = id,
-                title = title,
-                description = "",
-                adType = dealSide,
-                visibility = visibility,
+    fun badOpeningDate() = runTest {
+        val ctx = Context(
+            command = Command.UPDATE,
+            state = State.NONE,
+            workMode = WorkMode.STUB,
+            stubCase = Stubs.BAD_OPENING_DATE,
+            depositRequest = Deposit(
+                bankName = bankName,
+                depositName = depositName,
+                openingDate = "",
+                depositAmount = depositAmount ,
+                depositOperation = depositOperation
             ),
         )
         processor.exec(ctx)
-        assertEquals(Deposit(), ctx.adResponse)
-        assertEquals("description", ctx.errors.firstOrNull()?.field)
+        assertEquals(Deposit(), ctx.depositResponse)
+        assertEquals("opening_date", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 
     @Test
     fun databaseError() = runTest {
-        val ctx = MkplContext(
-            command = MkplCommand.CREATE,
-            state = MkplState.NONE,
-            workMode = MkplWorkMode.STUB,
-            stubCase = MkplStubs.DB_ERROR,
-            adRequest = Deposit(
-                id = id,
+        val ctx = Context(
+            command = Command.UPDATE,
+            state = State.NONE,
+            workMode = WorkMode.STUB,
+            stubCase = Stubs.DB_ERROR,
+            depositRequest = Deposit(
+                bankName = bankName,
             ),
         )
         processor.exec(ctx)
-        assertEquals(Deposit(), ctx.adResponse)
+        assertEquals(Deposit(), ctx.depositResponse)
         assertEquals("internal", ctx.errors.firstOrNull()?.group)
     }
 
     @Test
     fun badNoCase() = runTest {
-        val ctx = MkplContext(
-            command = MkplCommand.CREATE,
-            state = MkplState.NONE,
-            workMode = MkplWorkMode.STUB,
-            stubCase = MkplStubs.BAD_ID,
-            adRequest = Deposit(
-                id = id,
-                title = title,
-                description = description,
-                adType = dealSide,
-                visibility = visibility,
+        val ctx = Context(
+            command = Command.UPDATE,
+            state = State.NONE,
+            workMode = WorkMode.STUB,
+            stubCase = Stubs.BAD_ID,
+            depositRequest = Deposit(
+                bankName = bankName,
+                depositName = depositName,
+                openingDate = openingDate,
+                depositAmount = depositAmount ,
+                depositOperation = depositOperation
             ),
         )
         processor.exec(ctx)
-        assertEquals(Deposit(), ctx.adResponse)
-        assertEquals("stub", ctx.errors.firstOrNull()?.field)
+        assertEquals(Deposit(), ctx.depositResponse)
+        assertEquals("id", ctx.errors.firstOrNull()?.field)
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 }

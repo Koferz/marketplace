@@ -5,7 +5,7 @@ data class Deposit(
     var bankName: DepositOrgName = DepositOrgName.NONE,
     var ownerId: UserId = UserId.NONE,
     var depositName: String = "",
-    var rate: String = "",
+    var rate: String = "18",
     var openingDate: String = "",
     var depositTerm: String = "",
     var depositAmount: String = "",

@@ -11,6 +11,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation(libs.kotlinx.datetime)
 
                 implementation(libs.cor)
 

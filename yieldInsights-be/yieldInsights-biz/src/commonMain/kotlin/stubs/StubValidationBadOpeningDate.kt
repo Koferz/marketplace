@@ -8,7 +8,7 @@ import ru.otus.otuskotlin.yieldInsights.cor.ICorChainDsl
 import ru.otus.otuskotlin.yieldInsights.cor.worker
 import stubs.Stubs
 
-fun ICorChainDsl<Context>.stubValidationBadDescription(title: String) = worker {
+fun ICorChainDsl<Context>.stubValidationBadOpeningDate(title: String) = worker {
     this.title = title
     this.description = """
         Кейс ошибки валидации для opening_date
