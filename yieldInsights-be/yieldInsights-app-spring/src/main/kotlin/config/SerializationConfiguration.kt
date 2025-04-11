@@ -1,6 +1,7 @@
 package config
 
-import apiV1Mapper
+
+import apiV2Mapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessageConverter
@@ -8,8 +9,8 @@ import org.springframework.http.converter.json.KotlinSerializationJsonHttpMessag
 @Suppress("unused")
 @Configuration
 class SerializationConfiguration {
-//    @Bean
-//    fun messageConverter(): KotlinSerializationJsonHttpMessageConverter {
-//        return KotlinSerializationJsonHttpMessageConverter(apiV1Mapper)
-//    }
+    @Bean
+    fun messageConverter(): KotlinSerializationJsonHttpMessageConverter {
+        return KotlinSerializationJsonHttpMessageConverter(apiV2Mapper)
+    }
 }

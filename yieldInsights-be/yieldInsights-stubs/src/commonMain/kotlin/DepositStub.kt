@@ -13,25 +13,20 @@ object DepositStub {
         depositFind("d-02", filter, depositRate),
         depositFind("d-03", filter, depositRate),
     )
-//
-//    fun prepareOffersList(filter: String, type: MkplDealSide) = listOf(
-//        mkplAdSupply("s-666-01", filter, type),
-//        mkplAdSupply("s-666-02", filter, type),
-//        mkplAdSupply("s-666-03", filter, type),
-//        mkplAdSupply("s-666-04", filter, type),
-//        mkplAdSupply("s-666-05", filter, type),
-//        mkplAdSupply("s-666-06", filter, type),
-//    )
+
+    fun prepareClosingList(filter: String, ) = listOf(
+        depositSupply("T-bank", filter)
+    )
 
     private fun depositFind(id: String, filter: String, depositRate: String) =
-        deposit(T_BANK, id = id, filter = filter, depositRate)
+        deposit(T_BANK, id = id, filter = filter)
 
-//    private fun mkplAdSupply(id: String, filter: String) =
-//        mkplAd(AD_SUPPLY_BOLT1, id = id, filter = filter)
+    private fun depositSupply(id: String, filter: String) =
+        deposit(T_BANK, id = id, filter = filter)
 
-    private fun deposit(base: Deposit, id: String, filter: String, depositRate: String) = base.copy(
+    private fun deposit(base: Deposit, id: String, filter: String) = base.copy(
         depositId = DepositId(id),
         depositName = "$filter $id",
-        rate = "desc $filter $depositRate"
+        rate = "desc $filter"
     )
 }

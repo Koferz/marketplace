@@ -5,7 +5,7 @@ import MpLoggerProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ru.otus.otuskotlin.yieldInsights.logging.jvm.mpLoggerLogback
-import ru.otus.yieldInsights.biz.DepositProcessor
+import DepositProcessor
 
 @Suppress("unused")
 @Configuration

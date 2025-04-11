@@ -10,7 +10,6 @@ import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters
 import ru.otus.yieldInsights.api.v1.models.*
-import ru.otus.yieldInsights.biz.DepositProcessor
 import ru.otus.otuskotlin.yieldInsights.api.v1.mappers.*
 import kotlin.test.Test
 

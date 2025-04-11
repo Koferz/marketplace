@@ -13,6 +13,8 @@ data class Deposit(
     var isActive: DepositActive = DepositActive.NONE,
     var lock: DepositLock = DepositLock.NONE
 ) {
+    fun deepCopy(): Deposit = copy()
+
     fun isEmpty() = this == NONE
 
     companion object {

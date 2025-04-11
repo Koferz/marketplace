@@ -1,7 +1,7 @@
 package ru.otus.otuskotlin.marketplace.app.common
 
 import CorSettings
-import ru.otus.yieldInsights.biz.DepositProcessor
+import DepositProcessor
 
 interface IYieldInsightsAppSettings {
     val processor: DepositProcessor

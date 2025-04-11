@@ -5,7 +5,7 @@ object DepositStubTBank {
     val T_BANK: Deposit
         get() = Deposit(
             depositId = DepositId("1"),
-            bankName= DepositOrgName("T-Bank"),
+            bankName= DepositOrgName(""),
             ownerId = UserId("1"),
             depositName = "deposit1",
             rate = "18",

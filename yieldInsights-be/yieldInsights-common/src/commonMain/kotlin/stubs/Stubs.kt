@@ -10,4 +10,5 @@ enum class Stubs {
     BAD_DEPOSIT_AMOUNT,
     CANNOT_DELETE,
     BAD_SEARCH_STRING,
+    DB_ERROR
 }
