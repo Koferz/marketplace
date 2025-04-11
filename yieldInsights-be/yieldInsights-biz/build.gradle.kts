@@ -1,7 +1,6 @@
 
 plugins {
     id("build-kmp")
-
 }
 
 kotlin {

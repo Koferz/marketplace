@@ -17,6 +17,12 @@ data class Context(
     var depositRequest: Deposit = Deposit(),
     var depositFilterRequest: DepositFilter = DepositFilter(),
 
+    var depositValidating: Deposit = Deposit(),
+    var depositFilterValidating: DepositFilter = DepositFilter(),
+
+    var depositValidated: Deposit = Deposit(),
+    var depositFilterValidated: DepositFilter = DepositFilter(),
+
     var depositResponse: Deposit = Deposit(),
     var depositsResponse: MutableList<Deposit> = mutableListOf(),
 

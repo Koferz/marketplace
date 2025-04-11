@@ -9,7 +9,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.BodyInserters
 import ru.otus.otuskotlin.yieldInsights.api.v2.mappers.*
 import ru.otus.yieldInsights.api.v2.models.*
-import ru.otus.yieldInsights.biz.DepositProcessor
 import kotlin.test.Test
 
 @WebFluxTest(DepositControllerV2::class, DepositConfig::class)

@@ -3,7 +3,7 @@ package ru.otus.otuskotlin.yieldInsights.biz.stub
 import Context
 import kotlinx.coroutines.test.runTest
 import models.*
-import ru.otus.yieldInsights.biz.DepositProcessor
+import DepositProcessor
 import stubs.Stubs
 import kotlin.test.Test
 import kotlin.test.assertEquals

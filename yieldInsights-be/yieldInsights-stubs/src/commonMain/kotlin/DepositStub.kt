@@ -15,12 +15,7 @@ object DepositStub {
     )
 
     fun prepareClosingList(filter: String, ) = listOf(
-        depositSupply("T-bank", filter),
-//        mkplAdSupply("s-666-02", filter, type),
-//        mkplAdSupply("s-666-03", filter, type),
-//        mkplAdSupply("s-666-04", filter, type),
-//        mkplAdSupply("s-666-05", filter, type),
-//        mkplAdSupply("s-666-06", filter, type),
+        depositSupply("T-bank", filter)
     )
 
     private fun depositFind(id: String, filter: String, depositRate: String) =

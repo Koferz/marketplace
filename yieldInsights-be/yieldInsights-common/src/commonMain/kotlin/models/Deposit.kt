@@ -5,7 +5,7 @@ data class Deposit(
     var bankName: DepositOrgName = DepositOrgName.NONE,
     var ownerId: UserId = UserId.NONE,
     var depositName: String = "",
-    var rate: String = "18",
+    var rate: String = "",
     var openingDate: String = "",
     var depositTerm: String = "",
     var depositAmount: String = "",
@@ -13,6 +13,8 @@ data class Deposit(
     var isActive: DepositActive = DepositActive.NONE,
     var lock: DepositLock = DepositLock.NONE
 ) {
+    fun deepCopy(): Deposit = copy()
+
     fun isEmpty() = this == NONE
 
     companion object {
