@@ -2,7 +2,6 @@ import kotlinx.coroutines.test.runTest
 import mapper.fromTransport
 import ru.otus.otuskotlin.marketplace.app.common.IYieldInsightsAppSettings
 import ru.otus.yieldInsights.api.v2.models.*
-import ru.otus.yieldInsights.biz.DepositProcessor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

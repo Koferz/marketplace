@@ -1,7 +1,6 @@
 
 plugins {
     id("build-kmp")
-
 }
 
 kotlin {
@@ -11,6 +10,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation(libs.kotlinx.datetime)
+
+                implementation(libs.cor)
+
                 implementation(project(":yieldInsights-common"))
                 implementation(project(":yieldInsights-stubs"))
             }
