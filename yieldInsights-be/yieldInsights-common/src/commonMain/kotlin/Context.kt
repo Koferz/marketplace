@@ -8,6 +8,7 @@ data class Context(
     var state: State = State.NONE,
     val errors: MutableList<DepositError> = mutableListOf(),
 
+    var corSettings: CorSettings = CorSettings(),
     var workMode: WorkMode = WorkMode.PROD,
     var stubCase: Stubs = Stubs.NONE,
 
@@ -15,6 +16,12 @@ data class Context(
     var timeStart: Instant = Instant.NONE,
     var depositRequest: Deposit = Deposit(),
     var depositFilterRequest: DepositFilter = DepositFilter(),
+
+    var depositValidating: Deposit = Deposit(),
+    var depositFilterValidating: DepositFilter = DepositFilter(),
+
+    var depositValidated: Deposit = Deposit(),
+    var depositFilterValidated: DepositFilter = DepositFilter(),
 
     var depositResponse: Deposit = Deposit(),
     var depositsResponse: MutableList<Deposit> = mutableListOf(),
