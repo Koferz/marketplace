@@ -5,7 +5,7 @@ import models.DepositError
 
 sealed interface IDbDepositResponse: IDbResponse<Deposit>
 
-data class DbAdResponseOk(
+data class DbDepositResponseOk(
     val data: Deposit
 ): IDbDepositResponse
 
