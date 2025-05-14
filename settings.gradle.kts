@@ -10,3 +10,4 @@ pluginManagement {
 includeBuild("lessons")
 includeBuild("yieldInsights-be")
 includeBuild("yieldInsights-libs")
+includeBuild("yieldInsights-other")
