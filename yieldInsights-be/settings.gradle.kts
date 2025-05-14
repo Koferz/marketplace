@@ -38,4 +38,5 @@ include(":yieldInsights-app-rabbit")
 include(":yieldInsights-api-log1")
 include(":yieldInsights-biz")
 include(":yieldInsights-stubs")
+include(":yieldInsights-repo-common")
 
