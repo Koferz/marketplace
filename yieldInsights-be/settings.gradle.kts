@@ -40,4 +40,6 @@ include(":yieldInsights-biz")
 include(":yieldInsights-stubs")
 include(":yieldInsights-repo-common")
 include(":yieldInsights-repo-inmemory")
+include(":yieldInsights-repo-tests")
+include(":yieldInsights-repo-pgjvm")
 

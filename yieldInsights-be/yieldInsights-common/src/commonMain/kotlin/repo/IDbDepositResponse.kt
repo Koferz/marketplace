@@ -9,15 +9,15 @@ data class DbDepositResponseOk(
     val data: Deposit
 ): IDbDepositResponse
 
-data class DbAdResponseErr(
+data class DbDepositResponseErr(
     val errors: List<DepositError> = emptyList()
 ): IDbDepositResponse {
     constructor(err: DepositError): this(listOf(err))
 }
 
-data class DbAdResponseErrWithData(
+data class DbDepositResponseErrWithData(
     val data: Deposit,
     val errors: List<DepositError> = emptyList()
 ): IDbDepositResponse {
-    constructor(ad: Deposit, err: DepositError): this(ad, listOf(err))
+    constructor(deposit: Deposit, err: DepositError): this(deposit, listOf(err))
 }

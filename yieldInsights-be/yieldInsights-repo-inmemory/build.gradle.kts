@@ -18,7 +18,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-//                implementation(project(":yieldInsights-repo-test"))
+                implementation(project(":yieldInsights-repo-tests"))
             }
         }
         val jvmMain by getting {
