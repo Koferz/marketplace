@@ -43,4 +43,5 @@ include(":yieldInsights-repo-inmemory")
 include(":yieldInsights-repo-tests")
 include(":yieldInsights-repo-pgjvm")
 include(":yieldInsights-repo-pgntv")
+include(":yieldInsights-repo-stubs")
 
