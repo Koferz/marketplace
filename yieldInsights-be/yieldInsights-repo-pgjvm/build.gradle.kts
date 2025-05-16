@@ -8,7 +8,6 @@ repositories {
 
 dependencies {
     implementation(project(":yieldInsights-common"))
-    implementation(project(":yieldInsights-common"))
     api(":yieldInsights-repo-common")
 
     implementation(libs.coroutines.core)
