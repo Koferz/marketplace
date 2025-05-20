@@ -24,11 +24,11 @@ data class Context(
     var depositValidated: Deposit = Deposit(),
     var depositFilterValidated: DepositFilter = DepositFilter(),
 
-    var adRepo: IRepoDeposit = IRepoDeposit.NONE,
-    var adRepoRead: Deposit = Deposit(), // То, что прочитали из репозитория
-    var adRepoPrepare: Deposit = Deposit(), // То, что готовим для сохранения в БД
-    var adRepoDone: Deposit = Deposit(),  // Результат, полученный из БД
-    var adsRepoDone: MutableList<Deposit> = mutableListOf(),
+    var depositRepo: IRepoDeposit = IRepoDeposit.NONE,
+    var depositRepoRead: Deposit = Deposit(), // То, что прочитали из репозитория
+    var depositRepoPrepare: Deposit = Deposit(), // То, что готовим для сохранения в БД
+    var depositRepoDone: Deposit = Deposit(),  // Результат, полученный из БД
+    var depositsRepoDone: MutableList<Deposit> = mutableListOf(),
 
 
 

@@ -1,14 +1,17 @@
 import models.Command
 import models.DepositId
 import models.DepositLock
+import models.State
 import ru.otus.otuskotlin.marketplace.biz.stubs.stubDeleteSuccess
 import ru.otus.otuskotlin.marketplace.biz.stubs.stubValidationBadDepositTerm
 import ru.otus.otuskotlin.marketplace.biz.validation.validateIdNotEmpty
 import ru.otus.otuskotlin.yieldInsights.biz.general.initStatus
 import ru.otus.otuskotlin.yieldInsights.biz.general.operation
 import ru.otus.otuskotlin.yieldInsights.biz.general.stubs
+import ru.otus.otuskotlin.yieldInsights.biz.repo.*
 import ru.otus.otuskotlin.yieldInsights.biz.stubs.*
 import ru.otus.otuskotlin.yieldInsights.biz.validation.*
+import ru.otus.otuskotlin.yieldInsights.cor.chain
 import ru.otus.otuskotlin.yieldInsights.cor.rootChain
 import ru.otus.otuskotlin.yieldInsights.cor.worker
 
@@ -19,6 +22,7 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
 
     private val businessChain = rootChain<Context> {
         initStatus("Инициализация статуса")
+        initRepo("Инициализация репозитория")
 
         operation("Создание вклада", Command.CREATE) {
             stubs("Обработка стабов") {
@@ -39,6 +43,12 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
 
                 finishValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика сохранения"
+                repoPrepareCreate("Подготовка объекта для сохранения")
+                repoCreate("Создание объявления в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Получить вклад", Command.READ) {
             stubs("Обработка стабов") {
@@ -55,6 +65,16 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
 
                 finishValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика чтения"
+                repoRead("Чтение объявления из БД")
+                worker {
+                    title = "Подготовка ответа для Read"
+                    on { state == State.RUNNING }
+                    handle { depositRepoDone = depositRepoRead }
+                }
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Изменить вклад", Command.UPDATE) {
             stubs("Обработка стабов") {
@@ -81,6 +101,14 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
 
                 finishValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика сохранения"
+                repoRead("Чтение объявления из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareUpdate("Подготовка объекта для обновления")
+                repoUpdate("Обновление объявления в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Удалить вклад", Command.DELETE) {
             stubs("Обработка стабов") {
@@ -101,6 +129,14 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
                 validateLockProperFormat("Проверка формата lock")
                 finishValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика удаления"
+                repoRead("Чтение объявления из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareDelete("Подготовка объекта для удаления")
+                repoDelete("Удаление объявления из БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Поиск вклада", Command.SEARCH) {
             stubs("Обработка стабов") {
@@ -115,6 +151,8 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
 
                 finishAdFilterValidation("Успешное завершение процедуры валидации")
             }
+            repoSearch("Поиск объявления в БД по фильтру")
+            prepareResult("Подготовка ответа")
         }
         operation("Поиск подходящих вкладов", Command.CLOSING) {
             stubs("Обработка стабов") {
@@ -131,6 +169,13 @@ class DepositProcessor(private val corSettings: CorSettings = CorSettings.NONE
 
                 finishValidation("Успешное завершение процедуры валидации")
             }
+            chain {
+                title = "Логика поиска в БД"
+                repoRead("Чтение объявления из БД")
+                repoPrepareClosing("Подготовка данных для поиска предложений")
+                repoClosing("Поиск предложений для объявления в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
     }.build()
 }
