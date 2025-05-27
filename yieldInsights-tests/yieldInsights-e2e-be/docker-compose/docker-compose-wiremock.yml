@@ -1,0 +1,14 @@
+# Конфигурация для spring + (в перспективе) postgresql
+
+version: '3'
+services:
+  app-wiremock:
+    image: wiremock/wiremock:3.4.2
+    ports:
+      - "8080:8080"
+    volumes:
+#      - ./__files:/home/wiremock/__files
+      - ./volumes/wm-yieldInsights/mappings:/home/wiremock/mappings
+#    entrypoint: ["/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]

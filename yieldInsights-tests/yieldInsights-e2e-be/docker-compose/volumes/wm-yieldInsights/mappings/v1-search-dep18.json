@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/deposit/search",
+    "bodyPatterns": [
+      {"matchesJsonPath" : "$.depositFilter[?(@.searchString == '18')]"}
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "search",
+      "result": "success",
+      "ads": [
+        {
+          "depositId": "123",
+          "bankName": "T-bank",
+          "depositName": "deposit1",
+          "rate": "18",
+          "openingDate": "2025-05-17",
+          "depositTerm": "6",
+          "depositAmount": "10000",
+          "depositOperation": "PROLONGATION"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

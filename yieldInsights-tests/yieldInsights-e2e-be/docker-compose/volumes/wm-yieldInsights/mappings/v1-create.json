@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/deposit/create"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "create",
+      "result": "success",
+      "deposit": {
+        "depositId": "123",
+        "bankName": "{{{jsonPath request.body '$.ad.title'}}}",
+        "depositName": "{{{jsonPath request.body '$.deposit.depositName'}}}",
+        "rate": "{{{jsonPath request.body '$.deposit.rate'}}}",
+        "openingDate": "{{{jsonPath request.body '$.deposit.openingDate'}}}",
+        "depositTerm": "{{{jsonPath request.body '$.deposit.depositTerm'}}}",
+        "depositAmount": "{{{jsonPath request.body '$.deposit.depositAmount'}}}",
+        "depositOperation": "{{{jsonPath request.body '$.deposit.depositOperation'}}}"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}
