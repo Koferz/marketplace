@@ -40,6 +40,15 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.spring.mockk)
+
+    // DB
+    implementation(project(":yieldInsights-repo-stubs"))
+    implementation(project(":yieldInsights-repo-inmemory"))
+    implementation(project(":yieldInsights-repo-pgjvm"))
+    testImplementation(project(":yieldInsights-repo-common"))
+    testImplementation(project(":yieldInsights-stubs"))
+
 }
 
 tasks {
@@ -60,4 +69,18 @@ tasks {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    environment("DEPOSITS_DB", "test_db")
+}
+
+tasks.bootBuildImage {
+    builder = "paketobuildpacks/builder-jammy-base:latest"
+    environment.set(mapOf("BP_HEALTH_CHECKER_ENABLED" to "true"))
+    buildpacks.set(
+        listOf(
+            "gcr.io/paketo-buildpacks/adoptium",
+            "urn:cnb:builder:paketo-buildpacks/java",
+            "gcr.io/paketo-buildpacks/health-checker:latest"
+        )
+    )
+
 }

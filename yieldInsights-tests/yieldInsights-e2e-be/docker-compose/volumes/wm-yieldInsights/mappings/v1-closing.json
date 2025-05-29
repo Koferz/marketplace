@@ -1,0 +1,33 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/deposit/closing"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "closing",
+      "result": "success",
+      "deposit": {
+        "depositId": "123",
+        "rate": "18",
+        "depositName": "Deposit1"
+      },
+      "deposits": [
+        {
+          "depositId": "123",
+          "rate": "18",
+          "depositName": "Deposit1"
+        },
+        {
+          "depositId": "124",
+          "rate": "19",
+          "depositName": "Deposit2"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

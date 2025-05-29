@@ -14,5 +14,6 @@ object DepositStubTBank {
             depositAmount = "100000",
             depositOperation = DepositOperation.PROLONGATION,
             isActive = DepositActive.NONE,
+            lock = DepositLock("123-234-abc-ABC")
         )
 }

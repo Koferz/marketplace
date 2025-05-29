@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/deposit/update"
+  },
+
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "update",
+      "result": "success",
+      "deposit": {
+        "depositId": "125",
+        "bankName": "T-bank",
+        "depositName": "deposit1",
+        "rate": "18",
+        "openingDate": "2025-05-17",
+        "depositTerm": "6",
+        "depositAmount": "10000",
+        "depositOperation": "PROLONGATION"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

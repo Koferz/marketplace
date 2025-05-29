@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+  app-spring:
+    image: yieldInsights-app-spring:0.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      DB_TYPE_PROD: "psql"
+      MKPLADS_HOST: "psql"
+      MKPLADS_PORT: 5432
+      MKPLADS_DB: "yieldInsights_dep"
+      MKPLADS_USER: "postgres"
+      MKPLADS_PASS: "yieldInsights-pass"
+      THC_PATH: "/actuator/health"
+    depends_on:
+      psql:
+        condition: service_healthy
+      liquibase:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "/workspace/health-check"]
+
+  psql:
+    image: postgres
+    #    ports:
+    #      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "yieldInsights-pass"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "yieldInsights_ads"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  liquibase:
+    image: "yieldInsights-migration-pg:0.1.0"
+    environment:
+      LIQUIBASE_URL:
+      LIQUIBASE_COMMAND_URL: jdbc:postgresql://psql:5432/yieldInsights_dep
+      LIQUIBASE_COMMAND_USERNAME: postgres
+      LIQUIBASE_COMMAND_PASSWORD: "yieldInsights-pass"
+      LIQUIBASE_LIQUIBASE_SCHEMA_NAME: public
+
+    depends_on:
+      psql:
+        condition: service_healthy
