@@ -18,9 +18,16 @@ fun Throwable.asDepositError(
 )
 
 inline fun Context.addError(vararg error: DepositError) = errors.addAll(error)
+inline fun Context.addErrors(error: Collection<DepositError>) = errors.addAll(error)
 
 inline fun Context.fail(error: DepositError) {
     addError(error)
+    state = State.FAILING
+}
+
+
+inline fun Context.fail(errors: Collection<DepositError>) {
+    addErrors(errors)
     state = State.FAILING
 }
 
@@ -39,4 +46,16 @@ inline fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
     level = level,
+)
+
+inline fun errorSystem(
+    violationCode: String,
+    level: LogLevel = LogLevel.ERROR,
+    e: Throwable,
+) = DepositError(
+    code = "system-$violationCode",
+    group = "system",
+    message = "System error occurred. Our stuff has been informed, please retry later",
+    level = level,
+    exception = e,
 )

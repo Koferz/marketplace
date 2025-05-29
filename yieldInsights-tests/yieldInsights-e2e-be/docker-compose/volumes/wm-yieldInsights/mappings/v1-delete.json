@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/deposit/delete"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "delete",
+      "result": "success",
+      "deposit": {
+        "depositId": "{{{jsonPath request.body '$.deposit.depositId'}}}"
+      }
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": ["response-template"]
+  }
+}

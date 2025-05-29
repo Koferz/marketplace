@@ -23,6 +23,8 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
 
                 api(libs.coroutines.test)
+                implementation(project(":yieldInsights-repo-tests"))
+                implementation(project(":yieldInsights-repo-inmemory"))
             }
         }
         jvmMain {

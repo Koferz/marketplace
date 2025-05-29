@@ -2,6 +2,7 @@ import kotlinx.datetime.Instant
 import stubs.Stubs
 import models.WorkMode
 import models.*
+import ru.otus.otuskotlin.marketplace.common.repo.IRepoDeposit
 
 data class Context(
     var command: Command = Command.NONE,
@@ -22,6 +23,14 @@ data class Context(
 
     var depositValidated: Deposit = Deposit(),
     var depositFilterValidated: DepositFilter = DepositFilter(),
+
+    var depositRepo: IRepoDeposit = IRepoDeposit.NONE,
+    var depositRepoRead: Deposit = Deposit(), // То, что прочитали из репозитория
+    var depositRepoPrepare: Deposit = Deposit(), // То, что готовим для сохранения в БД
+    var depositRepoDone: Deposit = Deposit(),  // Результат, полученный из БД
+    var depositsRepoDone: MutableList<Deposit> = mutableListOf(),
+
+
 
     var depositResponse: Deposit = Deposit(),
     var depositsResponse: MutableList<Deposit> = mutableListOf(),

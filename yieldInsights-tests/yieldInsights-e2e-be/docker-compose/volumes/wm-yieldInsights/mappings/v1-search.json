@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/v1/deposit/search"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "responseType": "search",
+      "result": "success",
+      "deposits": [
+        {
+          "depositId": "123",
+          "bankName": "T-bank",
+          "depositName": "deposit1",
+          "rate": "18",
+          "openingDate": "2025-05-17",
+          "depositTerm": "6",
+          "depositAmount": "10000",
+          "depositOperation": "PROLONGATION"
+        },
+        {
+          "depositId": "1234",
+          "bankName": "T-bank",
+          "depositName": "deposit2",
+          "rate": "15",
+          "openingDate": "2025-04-17",
+          "depositTerm": "2",
+          "depositAmount": "100000",
+          "depositOperation": "CLOSE"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
